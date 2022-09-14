@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 class TgBot:
     token: str
     admin_id: int
+    host_id: int
     use_redis: bool
 
 
@@ -36,14 +37,15 @@ def load_config():
     return Config(
         tg_bot=TgBot(
             token=getenv('BOT_TOKEN'),
-            admin_id=int(getenv('ADMIN')),
-            use_redis=False
+            admin_id=int(getenv('ADMIN_ID')),
+            host_id=int(getenv('HOST_ID')),
+            use_redis=False if getenv('USE_REDIS') == 'False' else True
         ),
         db=DbConfig(
-            host=getenv('HOST'),
+            host=getenv('HOST_DB'),
             database=getenv('DATABASE'),
-            user=getenv('USER'),
-            password=getenv('PASSWORD')
+            user=getenv('USER_DB'),
+            password=getenv('PASSWORD_DB')
         ),
         misc=Miscellaneous()
     )

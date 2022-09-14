@@ -9,14 +9,14 @@ from SyzhetBot.config import load_config
 from SyzhetBot.filters.admin import AdminFilter
 from SyzhetBot.handlers.admin import register_admin
 from SyzhetBot.handlers.echo import register_echo
+from SyzhetBot.middlewares.environments import EnvironmentMiddleware
 
 
 logger = logging.getLogger(__name__)
 
 
-def register_all_middlewares(dp: Dispatcher):
-    # dp.setup_middleware() # передаем нужные middleware
-    pass
+def register_all_middlewares(dp: Dispatcher, config):
+    dp.setup_middleware(EnvironmentMiddleware(config=config)) # передаем нужные middleware
 
 
 def register_all_filters(dp: Dispatcher):
@@ -41,7 +41,7 @@ async def main():
     dp = Dispatcher(bot, storage=storage)
     bot['config'] = config
 
-    register_all_middlewares(dp)
+    register_all_middlewares(dp, config)
     register_all_filters(dp)
     register_all_handlers(dp)
 

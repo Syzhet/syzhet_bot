@@ -7,8 +7,9 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 from SyzhetBot.config import load_config
 from SyzhetBot.filters.admin import AdminFilter
-from SyzhetBot.handlers.admin import register_admin
-from SyzhetBot.handlers.echo import register_echo
+from SyzhetBot.handlers.users.start import register_start
+from SyzhetBot.handlers.users.menu import register_menu
+from SyzhetBot.handlers.users.echo import register_echo
 from SyzhetBot.middlewares.environments import EnvironmentMiddleware
 
 
@@ -25,7 +26,8 @@ def register_all_filters(dp: Dispatcher):
 
 def register_all_handlers(dp):
     # register_admin(dp) - регистрация handlers
-    register_admin(dp)
+    register_start(dp)
+    register_menu(dp)
     register_echo(dp)
 
 

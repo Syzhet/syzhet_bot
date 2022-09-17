@@ -12,6 +12,7 @@ from SyzhetBot.handlers.users.menu import register_menu
 from SyzhetBot.handlers.users.help import register_help
 from SyzhetBot.handlers.users.echo import register_echo
 from SyzhetBot.middlewares.environments import EnvironmentMiddleware
+from SyzhetBot.services.set_bot_commands import set_defaults_commands
 
 
 logger = logging.getLogger(__name__)
@@ -48,6 +49,8 @@ async def main():
     register_all_middlewares(dp, config)
     register_all_filters(dp)
     register_all_handlers(dp)
+
+    await set_defaults_commands(dp)
 
     try:
         await dp.start_polling()

@@ -10,6 +10,7 @@ from SyzhetBot.filters.admin import AdminFilter
 from SyzhetBot.handlers.users.start import register_start
 from SyzhetBot.handlers.users.menu import register_menu
 from SyzhetBot.handlers.users.help import register_help
+from SyzhetBot.handlers.users.example_work import register_example_work
 from SyzhetBot.handlers.users.echo import register_echo
 from SyzhetBot.middlewares.environments import EnvironmentMiddleware
 from SyzhetBot.middlewares.throttling import ThrottlingMiddleware
@@ -33,6 +34,7 @@ def register_all_handlers(dp):
     register_start(dp)
     register_menu(dp)
     register_help(dp)
+    register_example_work(dp)
     register_echo(dp)
 
 

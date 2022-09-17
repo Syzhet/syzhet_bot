@@ -24,7 +24,6 @@ async def example_work(call: types.CallbackQuery):
         reply_markup=feedback_back_menu_keyboard,
         disable_web_page_preview=True
     )
-    await call.answer()
 
 
 def register_example_work(dp: Dispatcher):

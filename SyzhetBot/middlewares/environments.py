@@ -1,3 +1,4 @@
+from aiogram import types
 from aiogram.dispatcher.middlewares import LifetimeControllerMiddleware
 
 
@@ -8,5 +9,5 @@ class EnvironmentMiddleware(LifetimeControllerMiddleware):
         super().__init__()
         self.kwargs = kwargs
 
-    async def pre_process(self, obj, data, *args):
-        data.update(**self.kwargs)
+    async def pre_process(self, update: types.Update, data: dict):
+        data.update(self.kwargs)

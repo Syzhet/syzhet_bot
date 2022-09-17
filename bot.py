@@ -12,6 +12,7 @@ from SyzhetBot.handlers.users.menu import register_menu
 from SyzhetBot.handlers.users.help import register_help
 from SyzhetBot.handlers.users.echo import register_echo
 from SyzhetBot.middlewares.environments import EnvironmentMiddleware
+from SyzhetBot.middlewares.throttling import ThrottlingMiddleware
 from SyzhetBot.services.set_bot_commands import set_defaults_commands
 
 
@@ -20,6 +21,7 @@ logger = logging.getLogger(__name__)
 
 def register_all_middlewares(dp: Dispatcher, config):
     dp.setup_middleware(EnvironmentMiddleware(config=config)) # передаем нужные middleware
+    dp.setup_middleware(ThrottlingMiddleware())
 
 
 def register_all_filters(dp: Dispatcher):

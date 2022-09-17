@@ -1,28 +1,32 @@
 from typing import Union
 
 from aiogram import types, Dispatcher
+from emoji import emojize
 
 from SyzhetBot.keyboards.inline import AllMenuInlineKeyboard
 
 
+MAIN_MENU_KEYBOARD = AllMenuInlineKeyboard(row_width=2)
+MAIN_MENU_KEYBOARD.make_inline_keyboard(
+    'main_menu',
+    {
+        'Примеры работ': 'works',
+        'Оформить заявку': 'orders',
+        'Обратная связь': 'feedback',
+    }
+)
+
+
 async def menu(obj: Union[types.Message, types.CallbackQuery]):
-    main_menu_keyboard = AllMenuInlineKeyboard(row_width=2)
-    main_menu_keyboard.make_inline_keyboard(
-        'main_menu',
-        {
-            'Примеры работ': 'works',
-            'Оформить заявку': 'orders',
-            'Обратная связь': 'feedback',
-        }
-    )
+    text_emoji = emojize(":black_medium-small_square:")
     text = ('Здесь вы можете:\n'
-            '&#9726 посмотреть мое портфолио;\n'
-            '&#9726 заказать у меня работу;\n'
-            '&#9726 запросить обратную связь.')
+            f'{text_emoji} посмотреть мое портфолио;\n'
+            f'{text_emoji} заказать у меня работу;\n'
+            f'{text_emoji} запросить обратную связь.')
     if isinstance(obj, types.Message):
-        await obj.answer(text=text, reply_markup=main_menu_keyboard)
+        await obj.answer(text=text, reply_markup=MAIN_MENU_KEYBOARD)
     else:
-        await obj.message.edit_text(text=text, reply_markup=main_menu_keyboard)
+        await obj.message.edit_text(text=text, reply_markup=MAIN_MENU_KEYBOARD)
 
 
 def register_menu(dp: Dispatcher):

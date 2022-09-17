@@ -1,6 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.callback_data import CallbackData
 
+
 class AllMenuInlineKeyboard(InlineKeyboardMarkup):
 
     callback_menu = CallbackData('menu', 'type', 'name')

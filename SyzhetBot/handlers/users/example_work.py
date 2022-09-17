@@ -5,23 +5,26 @@ from emoji import emojize
 from SyzhetBot.keyboards.inline import AllMenuInlineKeyboard
 
 
+EXAMPLE_WORK_BACK_MENU_KEYBOARD = AllMenuInlineKeyboard()
+EXAMPLE_WORK_BACK_MENU_KEYBOARD.make_inline_keyboard(
+    'feedback_menu',
+    {
+        emojize('В меню :BACK_arrow:'): 'menu'
+    }
+)
+
+BEHANCE = hlink('Behance', 'https://www.behance.net/khasguz')
+DRIBBLE = hlink('Dribbble', 'https://dribbble.com/khasguz')
+
+
 async def example_work(call: types.CallbackQuery):
-    feedback_back_menu_keyboard = AllMenuInlineKeyboard()
-    feedback_back_menu_keyboard.make_inline_keyboard(
-        'feedback_menu',
-        {
-            emojize('В меню :BACK_arrow:'): 'menu'
-        }
-    )
-    behance = hlink('Behance', 'https://www.behance.net/khasguz')
-    dribble = hlink('Dribbble', 'https://dribbble.com/khasguz')
     await call.message.edit_text(
         (f'{emojize(":pushpin:")} Работы по направлению '
          f'{hbold("графического дизайна")} '
-         f'вы можете посмотреть в моем профиле на <b>{behance}</b>.\n\n'
+         f'вы можете посмотреть в моем профиле на <b>{BEHANCE}</b>.\n\n'
          f'{emojize(":pushpin:")} Если вас интересуют {hbold("иллюстрации")}, '
-         f'то вам на мою страницу в <b>{dribble}</b>.'),
-        reply_markup=feedback_back_menu_keyboard,
+         f'то вам на мою страницу в <b>{DRIBBLE}</b>.'),
+        reply_markup=EXAMPLE_WORK_BACK_MENU_KEYBOARD,
         disable_web_page_preview=True
     )
 

@@ -9,6 +9,7 @@ from SyzhetBot.config import load_config
 from SyzhetBot.filters.admin import AdminFilter
 from SyzhetBot.handlers.users.start import register_start
 from SyzhetBot.handlers.users.menu import register_menu
+from SyzhetBot.handlers.users.help import register_help
 from SyzhetBot.handlers.users.echo import register_echo
 from SyzhetBot.middlewares.environments import EnvironmentMiddleware
 
@@ -28,6 +29,7 @@ def register_all_handlers(dp):
     # register_admin(dp) - регистрация handlers
     register_start(dp)
     register_menu(dp)
+    register_help(dp)
     register_echo(dp)
 
 
@@ -52,7 +54,7 @@ async def main():
     finally:
         await dp.storage.close()
         await dp.storage.wait_closed()
-        await bot.session.close() 
+        await bot.session.close()
 
 
 if __name__ == '__main__':

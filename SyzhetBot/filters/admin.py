@@ -2,6 +2,7 @@ from aiogram.dispatcher.filters import BoundFilter
 
 from SyzhetBot.config import Config
 
+
 class AdminFilter(BoundFilter):
     key = 'is_admin'
 

@@ -1,7 +1,15 @@
+from typing import Union
+
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 
 from emoji import emojize
+from SyzhetBot.config import Config
+from SyzhetBot.handlers.users.contact_feedback import (
+    email_contact_check,
+    mobile_contact_check
+)
+from SyzhetBot.handlers.users.menu import menu
 
 from SyzhetBot.misc.info_for_order import TYPE_WORKS
 from SyzhetBot.keyboards.inline import AllMenuInlineKeyboard
@@ -52,9 +60,9 @@ ORDER_CONTACT_KEYBOARD = AllMenuInlineKeyboard()
 ORDER_CONTACT_KEYBOARD.make_inline_keyboard(
     'order_contact_menu',
     {
-        emojize("Мобильный телефон :telephone_receiver:"): 'mobile',
-        emojize("Telegram :airplane:"): 'telegram',
-        emojize("Электронная почта :envelope:"): 'email',
+        emojize('Мобильный телефон :telephone_receiver:'): 'mobile',
+        emojize('Telegram :airplane:'): 'telegram',
+        emojize('Электронная почта :envelope:'): 'email',
         emojize('Отмена :cross_mark:'): 'cansel'
     },
     but_in_row=1
@@ -144,7 +152,7 @@ async def description_further_to_custom_info(
 
 
 async def order_get_contact(message: types.Message, state: FSMContext):
-    '''Обработка сообщения введенного пользователем для доп. инф. по заявке'''
+    '''Обработка сообщения введенного пользователем для доп. инф. по заявке.'''
     description = message.text
     async with state.proxy() as data:
         des_work = data.get('des_work')
@@ -160,7 +168,84 @@ async def order_get_contact(message: types.Message, state: FSMContext):
     await OrderState.get_contact.set()
 
 
+async def message_for_order_contact(call: types.CallbackQuery, type_contact):
+    message_dict = {
+        'mobile': ('Введите номер мобильного телефона \n'
+                   'в формате +7XXXXXXXXXX'),
+        'email':  ('Введите адрес электронной почты \n'
+                   'в формате name@domen.ru'),
+    }
+    await call.message.edit_text(
+        message_dict.get(type_contact),
+        reply_markup=ORDER_CONTACT_CANSEL_KEYBOARD
+    )
 
+
+async def send_order_data(
+    obj: Union[types.Message, types.CallbackQuery],
+    state: FSMContext,
+    config: Config,
+):
+    '''Функция отправки сообщения владельцу бота со всеми данными по заявке.'''
+    text_for_host = ('Контакт: {contact_text} '
+                     'оставил заявку.\n'
+                     'Категория заявки: {cat_data}\n'
+                     'Описание заявки: {des_data}')
+    answer_text = ('Спасибо за обращение!\n'
+                   'Ваша заявака принята.\n'
+                   'Я свяжусь с вами в ближайшее время.')
+    order_data = await state.get_data()
+    cat_data = ','.join(order_data.get('cat_work'))
+    des_data = ','.join(order_data.get('des_work'))
+    if isinstance(obj, types.CallbackQuery):
+        contact_text = f'@{obj.from_user.username}'
+        await obj.message.answer(answer_text)
+        await menu(obj.message, state)
+    else:
+        contact_text = order_data.get('con_data')
+        await obj.answer(answer_text)
+        await menu(obj, state)
+    await obj.bot.send_message(
+        chat_id=config.tg_bot.host_id,
+        text=text_for_host.format(
+            contact_text=contact_text,
+            cat_data=cat_data,
+            des_data=des_data
+        )
+    )
+
+
+async def order_set_contact(
+    call: types.CallbackQuery,
+    callback_data: dict,
+    state: FSMContext,
+    config: Config
+):
+    type_contact = callback_data.get('name')
+    if type_contact == 'telegram':
+        await send_order_data(call, state, config)
+    else:
+        await message_for_order_contact(call, type_contact)
+        async with state.proxy() as data:
+            data['type_contact'] = type_contact
+        await OrderState.set_contact.set()
+
+
+async def finish_order(
+    message: types.Message,
+    state: FSMContext,
+    config: Config
+):
+    async with state.proxy() as data:
+        type_contact = data['type_contact']
+        if type_contact == 'mobile':
+            if not await mobile_contact_check(message):
+                return
+        elif type_contact == 'email':
+            if not await email_contact_check(message):
+                return
+        await state.update_data(con_data=message.text)
+        await send_order_data(message, state, config)
 
 
 def register_order(dp: Dispatcher):
@@ -187,7 +272,8 @@ def register_order(dp: Dispatcher):
         state=[
             OrderState.category,
             OrderState.description,
-            OrderState.custom_info
+            OrderState.custom_info,
+            OrderState.get_contact
         ]
     )
     dp.register_callback_query_handler(
@@ -200,5 +286,17 @@ def register_order(dp: Dispatcher):
     )
     dp.register_message_handler(
         order_get_contact,
-        state=OrderState.custom_info
+        state=OrderState.custom_info,
+        content_types=types.ContentType.ANY
+    )
+    dp.register_callback_query_handler(
+        order_set_contact,
+        AllMenuInlineKeyboard.callback_menu.filter(
+            type='order_contact_menu'
+        ),
+        state=OrderState.get_contact
+    )
+    dp.register_message_handler(
+        finish_order,
+        state=OrderState.set_contact
     )

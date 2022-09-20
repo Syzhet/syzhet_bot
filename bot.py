@@ -8,8 +8,9 @@ from aiogram.contrib.fsm_storage.redis import RedisStorage2
 from SyzhetBot.config import load_config
 from SyzhetBot.filters.register_all_filters import register_all_filters
 from SyzhetBot.handlers.register_all_handlers import register_all_handlers
-from SyzhetBot.middlewares.register_all_middlewares import \
+from SyzhetBot.middlewares.register_all_middlewares import (
     register_all_middlewares
+)
 from SyzhetBot.services.set_bot_commands import set_defaults_commands
 
 logger = logging.getLogger(__name__)

@@ -1,0 +1,8 @@
+version: '3.3'
+
+services:
+  khasbot:
+    image: syzhet/khasbot:latest
+    restart: always
+    env_file:
+      - ./.env

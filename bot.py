@@ -26,7 +26,7 @@ async def main():
             u'#%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s'
         )
     )
-
+    '''Основная функция запуска бота.'''
     config = load_config()
     bot = Bot(token=config.tg_bot.token, parse_mode=types.ParseMode.HTML)
     storage = RedisStorage2() if config.tg_bot.use_redis else MemoryStorage()

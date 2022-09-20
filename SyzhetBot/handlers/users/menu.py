@@ -6,6 +6,7 @@ from aiogram.dispatcher import FSMContext
 from emoji import emojize
 
 from SyzhetBot.keyboards.inline import AllMenuInlineKeyboard
+from SyzhetBot.misc.throttling import rate_limit
 
 
 MAIN_MENU_KEYBOARD = AllMenuInlineKeyboard(row_width=2)
@@ -19,10 +20,12 @@ MAIN_MENU_KEYBOARD.make_inline_keyboard(
 )
 
 
+@rate_limit(limit=3)
 async def menu(
     obj: Union[types.Message, types.CallbackQuery],
     state: FSMContext
 ):
+    '''Обработка команды /menu и текстового сообщения "menu".'''
     current_state = await state.get_state()
     if current_state:
         await state.finish()
@@ -38,6 +41,7 @@ async def menu(
 
 
 def register_menu(dp: Dispatcher):
+    '''Регистрация в диспетчере функции menu.'''
     dp.register_message_handler(
         menu,
         commands=['menu'],

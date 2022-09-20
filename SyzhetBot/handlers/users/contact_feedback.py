@@ -20,6 +20,7 @@ CANSEL_CONTACT_KEYBOARD.make_inline_keyboard(
 
 
 async def message_for_contact(call: types.CallbackQuery, type_contact):
+    '''Отправка сообщения с предложением ввести контактную информацию.'''
     message_dict = {
         'mobile': ('Введите номер мобильного телефона \n'
                    'в формате +7XXXXXXXXXX'),
@@ -33,6 +34,7 @@ async def message_for_contact(call: types.CallbackQuery, type_contact):
 
 
 async def mobile_contact_check(message: types.Message):
+    '''Проверка правильности ввода номера телефона.'''
     if len(message.text) != 12:
         await message.answer('Номер должен состоять из 12 символов')
         return
@@ -50,6 +52,7 @@ async def mobile_contact_check(message: types.Message):
 
 
 async def email_contact_check(message: types.Message):
+    '''Проверка правильности ввода email.'''
     regex = re.compile(
         r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'
     )
@@ -68,6 +71,7 @@ async def contact_feedback(
     state: FSMContext,
     config: Config
 ):
+    '''Обработка нажатия на одну из кнопок меню выбора способа связи.'''
     type_contact = callback_data.get('name')
     if type_contact == 'telegram':
         await call.message.edit_text(
@@ -91,6 +95,7 @@ async def cansel_contact_feedback(
     call: types.CallbackQuery,
     state: FSMContext
 ):
+    '''Обработка нажатия inline-кнопки "Отмена".'''
     current_state = await state.get_state()
     if current_state:
         await state.finish()
@@ -98,6 +103,7 @@ async def cansel_contact_feedback(
 
 
 async def additional_info_contact(message: types.Message, state: FSMContext):
+    '''Обработка ввода контактной информации.'''
     async with state.proxy() as data:
         type_contact = data['type_contact']
         if type_contact == 'mobile':
@@ -121,6 +127,7 @@ async def send_contact_info_to_host(
     state: FSMContext,
     config: Config
 ):
+    '''Обработка ввода доп. информации и отправка контакта владельцу бота.'''
     await message.answer(
         ('Спасибо за обращение! \nЯ свяжусь с вами в ближайшее время.')
     )
@@ -137,6 +144,11 @@ async def send_contact_info_to_host(
 
 
 def register_contact_feedback(dp: Dispatcher):
+    '''
+    Регистрация в диспетчере функций: contact_feedback,
+    cansel_contact_feedback, additional_info_contact,
+    send_contact_info_to_host.
+    '''
     dp.register_callback_query_handler(
         contact_feedback,
         AllMenuInlineKeyboard.callback_menu.filter(type='feedback_menu')

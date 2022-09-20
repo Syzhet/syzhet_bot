@@ -2,8 +2,10 @@ from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 
 from .menu import menu
+from SyzhetBot.misc.throttling import rate_limit
 
 
+@rate_limit(limit=3)
 async def cmd_start(message: types.Message, state: FSMContext):
     '''Обработка команды /start.'''
     current_state = await state.get_state()
@@ -18,6 +20,7 @@ async def cmd_start(message: types.Message, state: FSMContext):
 
 
 def register_start(dp: Dispatcher):
+    '''Регистрация в диспетчере функции cmd_start.'''
     dp.register_message_handler(
         cmd_start,
         commands=['start'],

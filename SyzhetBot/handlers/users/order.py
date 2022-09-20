@@ -169,6 +169,7 @@ async def order_get_contact(message: types.Message, state: FSMContext):
 
 
 async def message_for_order_contact(call: types.CallbackQuery, type_contact):
+    '''Отправка сообщения с предложением ввести контактную информацию.'''
     message_dict = {
         'mobile': ('Введите номер мобильного телефона \n'
                    'в формате +7XXXXXXXXXX'),
@@ -221,6 +222,7 @@ async def order_set_contact(
     state: FSMContext,
     config: Config
 ):
+    '''Обработка нажатия на одну из кнопок меню выбора способа связи.'''
     type_contact = callback_data.get('name')
     if type_contact == 'telegram':
         await send_order_data(call, state, config)
@@ -236,6 +238,7 @@ async def finish_order(
     state: FSMContext,
     config: Config
 ):
+    '''Обработка ввода контактной информации.'''
     async with state.proxy() as data:
         type_contact = data['type_contact']
         if type_contact == 'mobile':
@@ -249,6 +252,12 @@ async def finish_order(
 
 
 def register_order(dp: Dispatcher):
+    '''
+    Регистрация в диспетчере функций: order_menu,
+    choise_order_category, category_further_to_description,
+    cansel_order, description_further_to_custom_info,
+    order_get_contact, order_set_contact, finish_order.
+    '''
     dp.register_callback_query_handler(
         order_menu,
         AllMenuInlineKeyboard.callback_menu.filter(name='orders')
@@ -286,8 +295,7 @@ def register_order(dp: Dispatcher):
     )
     dp.register_message_handler(
         order_get_contact,
-        state=OrderState.custom_info,
-        content_types=types.ContentType.ANY
+        state=OrderState.custom_info
     )
     dp.register_callback_query_handler(
         order_set_contact,

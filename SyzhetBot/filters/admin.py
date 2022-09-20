@@ -10,6 +10,7 @@ class AdminFilter(BoundFilter):
         self.is_admin = is_admin
 
     async def check(self, obj):
+        '''Проверка, что пользователь админ.'''
         if self.is_admin is None:
             return
         if not self.is_admin:

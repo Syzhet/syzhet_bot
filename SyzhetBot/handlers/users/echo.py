@@ -16,6 +16,7 @@ async def echo(message: types.Message, state: FSMContext):
 
 
 def register_echo(dp: Dispatcher):
+    '''Регистрация в диспетчере функции echo.'''
     dp.register_message_handler(
         echo,
         state='*',

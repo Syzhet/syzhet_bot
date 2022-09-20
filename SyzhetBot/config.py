@@ -33,6 +33,7 @@ class Config:
 
 
 def load_config():
+    '''Установка основных параметров для работы бота.'''
     load_dotenv()
     return Config(
         tg_bot=TgBot(

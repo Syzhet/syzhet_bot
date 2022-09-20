@@ -1,7 +1,7 @@
 ![Build Status](https://github.com/Syzhet/khas_telegram_bot/actions/workflows/khasbot.yml/badge.svg)
 
 
-# khas_telegram_bot
+# syzhet_bot
 
 ## Телеграм-бот ассистент для графического дизайнера.
 

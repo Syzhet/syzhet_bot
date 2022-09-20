@@ -1,13 +1,11 @@
 from typing import Union
 
-from aiogram import types, Dispatcher
+from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
-
 from emoji import emojize
 
 from SyzhetBot.keyboards.inline import AllMenuInlineKeyboard
 from SyzhetBot.misc.throttling import rate_limit
-
 
 MAIN_MENU_KEYBOARD = AllMenuInlineKeyboard(row_width=2)
 MAIN_MENU_KEYBOARD.make_inline_keyboard(

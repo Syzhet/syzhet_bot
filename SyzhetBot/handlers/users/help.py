@@ -1,5 +1,6 @@
-from aiogram import types, Dispatcher
+from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
+
 from SyzhetBot.misc.throttling import rate_limit
 
 

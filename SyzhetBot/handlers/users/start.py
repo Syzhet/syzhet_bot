@@ -1,8 +1,9 @@
-from aiogram import types, Dispatcher
+from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 
-from .menu import menu
 from SyzhetBot.misc.throttling import rate_limit
+
+from .menu import menu
 
 
 @rate_limit(limit=3)

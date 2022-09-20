@@ -1,8 +1,8 @@
 from aiogram import Dispatcher
 
+from .callanswer import CallAnswertMiddleware
 from .environments import EnvironmentMiddleware
 from .throttling import ThrottlingMiddleware
-from .callanswer import CallAnswertMiddleware
 
 
 def register_all_middlewares(dp: Dispatcher, config):

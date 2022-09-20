@@ -1,8 +1,7 @@
-from aiogram import types, Dispatcher
+from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 
 from .help import cmd_help
-
 
 ID_STICKER = ('CAACAgIAAxkBAAEFzJljHY8rk_'
               '-my6RYgA1vva00U8d2-wACnRYAAkqDaUtBibBPJTndlykE')

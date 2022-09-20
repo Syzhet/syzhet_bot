@@ -1,8 +1,7 @@
 import re
 
-from aiogram import types, Dispatcher
+from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
-
 from emoji import emojize
 
 from SyzhetBot.config import Config
@@ -10,7 +9,6 @@ from SyzhetBot.handlers.users.feedback import feedback
 from SyzhetBot.handlers.users.menu import menu
 from SyzhetBot.keyboards.inline import AllMenuInlineKeyboard
 from SyzhetBot.misc.states import FeedBackState
-
 
 CANSEL_CONTACT_KEYBOARD = AllMenuInlineKeyboard()
 CANSEL_CONTACT_KEYBOARD.make_inline_keyboard(

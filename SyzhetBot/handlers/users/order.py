@@ -1,20 +1,16 @@
 from typing import Union
 
-from aiogram import types, Dispatcher
+from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
-
 from emoji import emojize
+
 from SyzhetBot.config import Config
-from SyzhetBot.handlers.users.contact_feedback import (
-    email_contact_check,
-    mobile_contact_check
-)
+from SyzhetBot.handlers.users.contact_feedback import (email_contact_check,
+                                                       mobile_contact_check)
 from SyzhetBot.handlers.users.menu import menu
-
-from SyzhetBot.misc.info_for_order import TYPE_WORKS
 from SyzhetBot.keyboards.inline import AllMenuInlineKeyboard
+from SyzhetBot.misc.info_for_order import TYPE_WORKS
 from SyzhetBot.misc.states import OrderState
-
 
 ORDER_MENU_KEYBOARD = AllMenuInlineKeyboard()
 ORDER_MENU_KEYBOARD.make_inline_keyboard(

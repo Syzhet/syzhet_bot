@@ -1,22 +1,16 @@
 import logging
 
-from aiogram import types, Dispatcher
-from aiogram.utils.exceptions import (
-    MessageCantBeDeleted,
-    MessageCantBeEdited,
-    MessageCantBeForwarded,
-    MessageNotModified,
-    MessageTextIsEmpty,
-    MessageToEditNotFound,
-    MessageToDeleteNotFound,
-    MessageToForwardNotFound,
-    CantGetUpdates,
-    CantParseEntities,
-    TelegramAPIError,
-    BadRequest,
-    BotBlocked,
-    BotKicked
-)
+from aiogram import Dispatcher, types
+from aiogram.utils.exceptions import (BadRequest, BotBlocked, BotKicked,
+                                      CantGetUpdates, CantParseEntities,
+                                      MessageCantBeDeleted,
+                                      MessageCantBeEdited,
+                                      MessageCantBeForwarded,
+                                      MessageNotModified, MessageTextIsEmpty,
+                                      MessageToDeleteNotFound,
+                                      MessageToEditNotFound,
+                                      MessageToForwardNotFound,
+                                      TelegramAPIError)
 
 
 async def errors_handler(update: types.Update, exception):

@@ -1,12 +1,10 @@
 from contextlib import suppress
 
-from aiogram import types, Dispatcher
+from aiogram import Dispatcher, types
 from aiogram.utils.exceptions import MessageNotModified
-
 from emoji import emojize
 
 from SyzhetBot.keyboards.inline import AllMenuInlineKeyboard
-
 
 FEEDBACK_BACK_MENU_KEYBOARD = AllMenuInlineKeyboard()
 FEEDBACK_BACK_MENU_KEYBOARD.make_inline_keyboard(

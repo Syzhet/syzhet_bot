@@ -1,6 +1,6 @@
+from dataclasses import dataclass
 from os import getenv
 
-from dataclasses import dataclass
 from dotenv import load_dotenv
 
 

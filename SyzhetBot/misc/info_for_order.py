@@ -1,7 +1,5 @@
 from aiogram.utils.markdown import hbold
-
 from emoji import emojize
-
 
 POSTER = (
     f'{hbold("Постер, баннер, афиша")}\n'

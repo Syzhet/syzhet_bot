@@ -1,9 +1,8 @@
-from aiogram import types, Dispatcher
+from aiogram import Dispatcher, types
 from aiogram.utils.markdown import hbold, hlink
 from emoji import emojize
 
 from SyzhetBot.keyboards.inline import AllMenuInlineKeyboard
-
 
 EXAMPLE_WORK_BACK_MENU_KEYBOARD = AllMenuInlineKeyboard()
 EXAMPLE_WORK_BACK_MENU_KEYBOARD.make_inline_keyboard(

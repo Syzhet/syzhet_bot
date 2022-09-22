@@ -83,7 +83,7 @@ sudo docker-compose up -d
 
 
 ## Пример работы бота
-- @KhasGuzBot
+- https://t.me/khasguz_bot
 
 ## Авторы проекта
 

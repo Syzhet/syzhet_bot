@@ -1,7 +1,6 @@
 from aiogram.utils.markdown import hbold
 from emoji import emojize
 
-
 text_emoji = emojize(":black_medium-small_square:")
 
 POSTER = (

@@ -1,12 +1,11 @@
-from aiohttp import ClientSession
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
+from aiohttp import ClientSession
 
 from SyzhetBot.misc.throttling import rate_limit
 
-from .menu import menu
 from ...misc.http_request import ApiHttpRequest
-
+from .menu import menu
 
 CREATE_USER_URL = '/api/v1/users/'
 

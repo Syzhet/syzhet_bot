@@ -1,11 +1,11 @@
 from aiogram import Dispatcher
 from aiohttp import ClientSession
 
+from ..config import Config
+from .api_session import ApiMiddlware
 from .callanswer import CallAnswertMiddleware
 from .environments import EnvironmentMiddleware
 from .throttling import ThrottlingMiddleware
-from .api_session import ApiMiddlware
-from ..config import Config
 
 
 def register_all_middlewares(

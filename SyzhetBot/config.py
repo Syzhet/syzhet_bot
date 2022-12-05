@@ -22,7 +22,9 @@ class DbConfig:
 
 @dataclass
 class Miscellaneous:
-    others_params: str = None
+    api_url: str
+    api_username: str
+    api_password: str
 
 
 @dataclass
@@ -48,5 +50,9 @@ def load_config():
             user=getenv('USER_DB'),
             password=getenv('PASSWORD_DB')
         ),
-        misc=Miscellaneous()
+        misc=Miscellaneous(
+            api_url=getenv('API_URL'),
+            api_username=getenv('API_USERNAME'),
+            api_password=getenv('API_PASSWORD')
+        )
     )

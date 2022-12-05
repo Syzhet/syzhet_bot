@@ -1,4 +1,5 @@
 import asyncio
+import aiohttp
 import logging
 
 from aiogram import Bot, Dispatcher, types
@@ -30,8 +31,9 @@ async def main():
     storage = RedisStorage2() if config.tg_bot.use_redis else MemoryStorage()
     dp = Dispatcher(bot, storage=storage)
     bot['config'] = config
+    session = aiohttp.ClientSession(config.misc.api_url)
 
-    register_all_middlewares(dp, config)
+    register_all_middlewares(dp, config, session)
     register_all_filters(dp)
     register_all_handlers(dp)
 

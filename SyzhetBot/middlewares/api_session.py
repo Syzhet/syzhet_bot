@@ -11,7 +11,7 @@ class ApiMiddlware(LifetimeControllerMiddleware):
         self.api_username = misc.api_username
         self.api_password = misc.api_password
 
-    async def pre_process(self, update: types.Update, data: dict):
+    async def pre_process(self, update: types.Update, data: dict, *args):
         data['api_session'] = self.session
         api_http_request = ApiHttpRequest(
             session=self.session,
@@ -23,6 +23,6 @@ class ApiMiddlware(LifetimeControllerMiddleware):
         )
         data['token'] = token
 
-    async def post_process(self, update: types.Update, data: dict):
+    async def post_process(self, update: types.Update, data: dict, *args):
         await data['api_session'].close()
         del data['token']

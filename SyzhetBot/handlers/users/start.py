@@ -14,7 +14,7 @@ CREATE_USER_URL = '/api/v1/users/'
 async def cmd_start(
     message: types.Message,
     state: FSMContext,
-    session: ClientSession,
+    api_session: ClientSession,
     token: str
 ):
     '''Обработка команды /start.'''
@@ -29,7 +29,7 @@ async def cmd_start(
     await menu(message, state)
     telegram_id = message.from_user.id
     username = message.from_user.username
-    api_http_request = ApiHttpRequest(session, CREATE_USER_URL)
+    api_http_request = ApiHttpRequest(api_session, CREATE_USER_URL)
     await api_http_request.create_user(token, username, telegram_id)
 
 

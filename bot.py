@@ -12,7 +12,6 @@ from SyzhetBot.handlers.register_all_handlers import register_all_handlers
 from SyzhetBot.middlewares.register_all_middlewares import (
     register_all_middlewares
 )
-
 from SyzhetBot.services.set_bot_commands import set_defaults_commands
 
 logger = logging.getLogger(__name__)

@@ -1,5 +1,4 @@
 from aiogram import Dispatcher
-from aiohttp import ClientSession
 
 from ..config import Config
 from .api_session import ApiMiddlware
@@ -11,9 +10,8 @@ from .throttling import ThrottlingMiddleware
 def register_all_middlewares(
     dp: Dispatcher,
     config: Config,
-    session: ClientSession
 ):
     dp.setup_middleware(EnvironmentMiddleware(config=config))
     dp.setup_middleware(ThrottlingMiddleware())
     dp.setup_middleware(CallAnswertMiddleware())
-    dp.setup_middleware(ApiMiddlware(session, config.misc))
+    dp.setup_middleware(ApiMiddlware(config.misc))

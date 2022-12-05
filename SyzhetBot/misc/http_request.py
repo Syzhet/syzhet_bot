@@ -13,3 +13,17 @@ class ApiHttpRequest:
             data={'username': username, 'password': password}
         ) as resp:
             return await resp.json()
+
+    async def create_user(
+        self,
+        token: str,
+        username: str,
+        telegram_id: str
+    ):
+        async with self.session.post(
+            url=self.url,
+            headers={'Authorization': f'Bearer {token}'},
+            data={'username': username, 'telegram_id': telegram_id}
+        ) as resp:
+            response = await resp.json()
+            print(response)

@@ -22,5 +22,5 @@ def register_all_handlers(dp: Dispatcher):
     register_feedback(dp)
     register_contact_feedback(dp)
     register_order(dp)
-    register_echo(dp)
     register_cmd(dp)
+    register_echo(dp)

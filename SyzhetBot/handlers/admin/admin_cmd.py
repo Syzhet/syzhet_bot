@@ -1,9 +1,8 @@
 from aiogram import Dispatcher, types
 from aiohttp import ClientSession
 
-from ...misc.http_request import ApiHttpRequest
 from ...filters.admin import AdminFilter
-
+from ...misc.http_request import ApiHttpRequest
 
 USER_URL = '/api/v1/users/'
 ORDER_URL = '/api/v1/orders/'

@@ -26,6 +26,6 @@ class ApiHttpRequest:
         async with self.session.post(
             url=self.url,
             headers={'Authorization': f'Bearer {token}'},
-            data={'username': username, 'telegram_id': telegram_id}
+            json={'username': username, 'telegram_id': telegram_id}
         ) as resp:
             return await resp.json()

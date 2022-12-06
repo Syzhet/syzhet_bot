@@ -1,3 +1,4 @@
+import logging
 import aiohttp
 
 
@@ -20,10 +21,11 @@ class ApiHttpRequest:
         username: str,
         telegram_id: str
     ):
+        logging.info(f'----------- This token handler: {token}')
         async with self.session.post(
             url=self.url,
             headers={'Authorization': f'Bearer {token}'},
             data={'username': username, 'telegram_id': telegram_id}
         ) as resp:
             response = await resp.json()
-            print(response)
+            return response

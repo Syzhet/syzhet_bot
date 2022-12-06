@@ -1,6 +1,6 @@
 import logging
-import aiohttp
 
+import aiohttp
 from aiogram import types
 from aiogram.dispatcher.middlewares import LifetimeControllerMiddleware
 

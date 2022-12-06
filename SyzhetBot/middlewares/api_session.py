@@ -28,7 +28,7 @@ class ApiMiddlware(LifetimeControllerMiddleware):
             username=self.api_username,
             password=self.api_password
         )
-        data['token'] = token
+        data['token'] = token['access_token']
         logging.info(f'!!!!!!!!!!! This token in middlware: {token}')
 
     async def post_process(self, update: types.Update, data: dict, *args):

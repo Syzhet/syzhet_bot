@@ -1,7 +1,7 @@
 from aiogram import Dispatcher, types
 from aiohttp import ClientSession
 
-# from ...filters.admin import AdminFilter
+from ...filters.admin import AdminFilter
 from ...misc.http_request import ApiHttpRequest
 
 USER_URL = '/api/v1/users/'
@@ -29,7 +29,7 @@ def register_cmd(dp: Dispatcher):
     '''Регистрация в диспетчере функции cmd_start.'''
     dp.register_message_handler(
         cmd_users,
-        # AdminFilter(),
+        AdminFilter(),
         commands=['users'],
         state='*'
     )

@@ -1,5 +1,3 @@
-import logging
-
 import aiohttp
 from aiogram import types
 from aiogram.dispatcher.middlewares import LifetimeControllerMiddleware
@@ -29,7 +27,6 @@ class ApiMiddlware(LifetimeControllerMiddleware):
             password=self.api_password
         )
         data['token'] = token['access_token']
-        logging.info(f'!!!!!!!!!!! This token in middlware: {token}')
 
     async def post_process(self, update: types.Update, data: dict, *args):
         await data['api_session'].close()

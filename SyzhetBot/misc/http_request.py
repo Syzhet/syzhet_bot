@@ -1,5 +1,3 @@
-import logging
-
 import aiohttp
 
 
@@ -22,10 +20,21 @@ class ApiHttpRequest:
         username: str,
         telegram_id: str
     ):
-        logging.info(f'----------- This token handler: {token}')
         async with self.session.post(
             url=self.url,
             headers={'Authorization': f'Bearer {token}'},
             json={'username': username, 'telegram_id': telegram_id}
+        ) as resp:
+            return await resp.json()
+
+    async def get_users(
+        self,
+        token,
+        params=None
+    ):
+        async with self.session.get(
+            url=self.url,
+            headers={'Authorization': f'Bearer {token}'},
+            params=params
         ) as resp:
             return await resp.json()

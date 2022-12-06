@@ -1,5 +1,6 @@
 from aiogram import Dispatcher
 
+from .admin.admin_cmd import register_cmd
 from .errors.errors_handler import register_errors_handler
 from .users.contact_feedback import register_contact_feedback
 from .users.echo import register_echo
@@ -9,7 +10,6 @@ from .users.help import register_help
 from .users.menu import register_menu
 from .users.order import register_order
 from .users.start import register_start
-from .admin.admin_cmd import register_cmd
 
 
 def register_all_handlers(dp: Dispatcher):

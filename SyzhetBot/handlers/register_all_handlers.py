@@ -9,6 +9,7 @@ from .users.help import register_help
 from .users.menu import register_menu
 from .users.order import register_order
 from .users.start import register_start
+from .admin.admin_cmd import register_cmd
 
 
 def register_all_handlers(dp: Dispatcher):
@@ -22,3 +23,4 @@ def register_all_handlers(dp: Dispatcher):
     register_contact_feedback(dp)
     register_order(dp)
     register_echo(dp)
+    register_cmd(dp)

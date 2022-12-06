@@ -1,4 +1,5 @@
 import logging
+
 import aiohttp
 
 
@@ -27,5 +28,4 @@ class ApiHttpRequest:
             headers={'Authorization': f'Bearer {token}'},
             data={'username': username, 'telegram_id': telegram_id}
         ) as resp:
-            response = await resp.json()
-            return response
+            return await resp.json()

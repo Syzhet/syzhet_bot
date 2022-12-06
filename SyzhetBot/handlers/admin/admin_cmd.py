@@ -29,7 +29,7 @@ def register_cmd(dp: Dispatcher):
     '''Регистрация в диспетчере функции cmd_start.'''
     dp.register_message_handler(
         cmd_users,
-        AdminFilter(),
+        AdminFilter,
         commands=['users'],
         state='*'
     )

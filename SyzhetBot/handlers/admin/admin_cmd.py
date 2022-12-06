@@ -26,7 +26,7 @@ async def cmd_users(
 
 
 def register_cmd(dp: Dispatcher):
-    '''Регистрация в диспетчере функции cmd_start.'''
+    '''Регистрация в диспетчере функции cmd_users.'''
     dp.register_message_handler(
         cmd_users,
         AdminFilter(),

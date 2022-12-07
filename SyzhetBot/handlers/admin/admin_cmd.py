@@ -28,7 +28,7 @@ async def cmd_users(
             orders: Union[str, List] = []
             if resp['orders']:
                 for ord in resp['orders']:
-                    orders.append = (
+                    orders.append(
                         (f'id: {ord["id"]}\n'
                          f'Название: {ord["title"]}\n'
                          f'Описание: {ord["description"]}\n'

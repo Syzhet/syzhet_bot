@@ -21,7 +21,7 @@ async def cmd_users(
     api_http_request = ApiHttpRequest(api_session, USER_URL)
     response = await api_http_request.get_users(token, params)
     try:
-        async for resp in response:
+        for resp in response:
             await message.answer(
                 (f'id: {resp["id"]}\n'
                  f'usernmae: @{resp["username"]}\n'

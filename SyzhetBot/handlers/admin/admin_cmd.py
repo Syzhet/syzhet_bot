@@ -20,9 +20,19 @@ async def cmd_users(
             params = {params[0]: params[1]}
     api_http_request = ApiHttpRequest(api_session, USER_URL)
     response = await api_http_request.get_users(token, params)
-    await message.answer(
-        f'{response}'
-    )
+    try:
+        async for resp in response:
+            await message.answer(
+                (f'id: {resp["id"]}\n'
+                 f'usernmae: @{resp["username"]}\n'
+                 f'telegram_id: {resp["telegram_id"]}\n'
+                 f'updated: {resp["updated_on"]}\n'
+                 f'orders: {resp["orders"]}')
+            )
+    except KeyError:
+        await message.answer(
+            'Произошла ошибка. Попробуйте повторить запрос позже'
+        )
 
 
 def register_cmd(dp: Dispatcher):

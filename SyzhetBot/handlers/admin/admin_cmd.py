@@ -1,10 +1,9 @@
-from typing import List, Union
-
 from aiogram import Dispatcher, types
 from aiohttp import ClientSession
 
 from ...filters.admin import AdminFilter
 from ...misc.http_request import ApiHttpRequest
+from ...misc.for_admin_commands import list_user_to_message
 
 USER_URL = '/api/v1/users/'
 ORDER_URL = '/api/v1/orders/'
@@ -24,29 +23,10 @@ async def cmd_users(
     api_http_request = ApiHttpRequest(api_session, USER_URL)
     response = await api_http_request.get_users(token, params)
     try:
-        for resp in response:
-            orders: Union[str, List] = []
-            if resp['orders']:
-                for ord in resp['orders']:
-                    orders.append(
-                        (f'id: {ord["id"]}\n'
-                         f'Название: {ord["title"]}\n'
-                         f'Описание: {ord["description"]}\n'
-                         '-----------\n')
-                    )
-                orders = ''.join(orders)
-            else:
-                orders = 'Нет заказов'
-            await message.answer(
-                (f'id: {resp["id"]}\n'
-                 f'usernmae: @{resp["username"]}\n'
-                 f'telegram_id: {resp["telegram_id"]}\n'
-                 f'updated: {resp["updated_on"]}\n'
-                 f'Заказы:\n\t {orders}')
-            )
+        await list_user_to_message(message, response)
     except KeyError:
         await message.answer(
-            'Произошла ошибка. Попробуйте повторить запрос позже'
+            'Произошла ошибка. Попробуйте изменить запрос'
         )
 
 

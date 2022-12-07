@@ -1,3 +1,4 @@
+from typing import Dict, List, Optional
 import aiohttp
 
 
@@ -31,7 +32,9 @@ class ApiHttpRequest:
         self,
         token,
         params=None
-    ):
+    ) -> List[Optional[Dict[str, str]]]:
+        """Возвращает список пользователей, полученных через API."""
+
         async with self.session.get(
             url=self.url,
             headers={'Authorization': f'Bearer {token}'},

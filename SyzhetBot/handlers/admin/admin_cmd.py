@@ -1,3 +1,4 @@
+from typing import List, Union
 from aiogram import Dispatcher, types
 from aiohttp import ClientSession
 
@@ -13,7 +14,8 @@ async def cmd_users(
     api_session: ClientSession,
     token: str
 ):
-    '''Обработка сообщения users.'''
+    '''Обработка команды /users.'''
+
     params = message.get_args().split()
     if params:
         if len(params) == 2:
@@ -22,6 +24,18 @@ async def cmd_users(
     response = await api_http_request.get_users(token, params)
     try:
         for resp in response:
+            orders: Union[str, List] = []
+            if resp['orders']:
+                for ord in resp['orders']:
+                    orders.append = (
+                        (f'id: {ord["id"]}\n'
+                         f'Название: {ord["title"]}\n'
+                         f'Описание: {ord["description"]}\n'
+                         '-----------\n')
+                    )
+                orders = ''.join(orders)
+            else:
+                orders = 'Нет заказов'
             await message.answer(
                 (f'id: {resp["id"]}\n'
                  f'usernmae: @{resp["username"]}\n'
@@ -37,6 +51,7 @@ async def cmd_users(
 
 def register_cmd(dp: Dispatcher):
     '''Регистрация в диспетчере функции cmd_users.'''
+
     dp.register_message_handler(
         cmd_users,
         AdminFilter(),

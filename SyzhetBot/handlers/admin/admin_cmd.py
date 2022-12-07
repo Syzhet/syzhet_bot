@@ -42,7 +42,7 @@ async def cmd_users(
                  f'usernmae: @{resp["username"]}\n'
                  f'telegram_id: {resp["telegram_id"]}\n'
                  f'updated: {resp["updated_on"]}\n'
-                 f'orders: {orders}')
+                 f'Заказы:\n\t {orders}')
             )
     except KeyError:
         await message.answer(

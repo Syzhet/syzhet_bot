@@ -16,6 +16,20 @@ class ApiHttpRequest:
         ) as resp:
             return await resp.json()
 
+    async def get_obj_list(
+        self,
+        token: str,
+        params: Optional[Dict[str, str]] = None
+    ) -> List[Optional[Dict[str, str]]]:
+        """Возвращает список заказов, полученных через API."""
+
+        async with self.session.get(
+            url=self.url,
+            headers={'Authorization': f'Bearer {token}'},
+            params=params
+        ) as resp:
+            return await resp.json()
+
     async def create_user(
         self,
         token: str,
@@ -36,12 +50,7 @@ class ApiHttpRequest:
     ) -> List[Optional[Dict[str, str]]]:
         """Возвращает список пользователей, полученных через API."""
 
-        async with self.session.get(
-            url=self.url,
-            headers={'Authorization': f'Bearer {token}'},
-            params=params
-        ) as resp:
-            return await resp.json()
+        return await self.get_obj_list(token, params)
 
     async def get_user_id(
         self,
@@ -82,3 +91,12 @@ class ApiHttpRequest:
             }
         ) as resp:
             return await resp.json()
+
+    async def get_orders(
+        self,
+        token: str,
+        params: Optional[Dict[str, str]] = None
+    ) -> List[Optional[Dict[str, str]]]:
+        """Возвращает список заказов, полученных через API."""
+
+        return await self.get_obj_list(token, params)

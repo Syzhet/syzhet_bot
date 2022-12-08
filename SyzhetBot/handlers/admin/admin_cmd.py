@@ -6,6 +6,7 @@ from ...misc.for_admin_commands import list_user_to_message
 from ...misc.http_request import ApiHttpRequest
 
 USER_URL = '/api/v1/users/'
+ORDER_URL = '/api/v1/orders/'
 
 
 async def cmd_users(
@@ -40,7 +41,7 @@ async def cmd_orders(
     if params:
         if len(params) == 2:
             params = {params[0]: params[1]}
-    api_http_request = ApiHttpRequest(api_session, USER_URL)
+    api_http_request = ApiHttpRequest(api_session, ORDER_URL)
     response = await api_http_request.get_orders(token, params)
     # try:
     #     await list_user_to_message(message, response)

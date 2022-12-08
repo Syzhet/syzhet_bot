@@ -31,8 +31,8 @@ class ApiHttpRequest:
 
     async def get_users(
         self,
-        token,
-        params=None
+        token: str,
+        params: Optional[Dict[str, str]] = None
     ) -> List[Optional[Dict[str, str]]]:
         """Возвращает список пользователей, полученных через API."""
 
@@ -40,5 +40,45 @@ class ApiHttpRequest:
             url=self.url,
             headers={'Authorization': f'Bearer {token}'},
             params=params
+        ) as resp:
+            return await resp.json()
+
+    async def get_user_id(
+        self,
+        token: str,
+        tg_id: Dict[str, int]
+    ) -> int:
+        """Функция получения пользователя по id."""
+
+        user = await self.get_users(
+            token=token,
+            params=tg_id
+        )
+        try:
+            return user[0]['id']
+        except (IndexError, KeyError):
+            return 'Error. This user not found'
+
+    async def create_order(
+        self,
+        token: str,
+        title: str,
+        description: str,
+        tg_id: Dict[str, int]
+    ):
+        """Функция создания заказа."""
+
+        user_id = await self.get_user_id(
+            token=token,
+            tg_id=tg_id
+        )
+        async with self.session.post(
+            url=self.url,
+            headers={'Authorization': f'Bearer {token}'},
+            json={
+                'title': title,
+                'description': description,
+                'user_id': int(user_id)
+            }
         ) as resp:
             return await resp.json()

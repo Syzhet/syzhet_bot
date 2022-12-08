@@ -1,7 +1,9 @@
+import logging
 from typing import Union
 
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
+import aiohttp
 from emoji import emojize
 
 from SyzhetBot.config import Config
@@ -11,6 +13,8 @@ from SyzhetBot.handlers.users.menu import menu
 from SyzhetBot.keyboards.inline import AllMenuInlineKeyboard
 from SyzhetBot.misc.info_for_order import TYPE_WORKS
 from SyzhetBot.misc.states import OrderState
+from SyzhetBot.misc.http_request import ApiHttpRequest
+
 
 ORDER_MENU_KEYBOARD = AllMenuInlineKeyboard()
 ORDER_MENU_KEYBOARD.make_inline_keyboard(
@@ -71,6 +75,8 @@ ORDER_CONTACT_CANSEL_KEYBOARD.make_inline_keyboard(
         emojize('Отмена :cross_mark:'): 'cansel'
     }
 )
+
+ORDER_URL = '/api/v1/orders/'
 
 
 async def type_work(call: types.CallbackQuery, type_work):
@@ -182,6 +188,8 @@ async def send_order_data(
     obj: Union[types.Message, types.CallbackQuery],
     state: FSMContext,
     config: Config,
+    api_session: aiohttp.ClientSession,
+    token: str
 ):
     '''Функция отправки сообщения владельцу бота со всеми данными по заявке.'''
     text_for_host = ('Контакт: {contact_text} '
@@ -210,6 +218,20 @@ async def send_order_data(
             des_data=des_data
         )
     )
+    user_id = obj.from_user.id
+    api_http_request = ApiHttpRequest(
+        session=api_session,
+        url=ORDER_URL
+    )
+    try:
+        await api_http_request.create_order(
+            token=token,
+            title=cat_data,
+            description=des_data,
+            tg_id={'user_id': user_id}
+        )
+    except Exception as exp:
+        logging.info(f'Ошибка при создании заказа - {exp}')
 
 
 async def order_set_contact(
@@ -232,7 +254,9 @@ async def order_set_contact(
 async def finish_order(
     message: types.Message,
     state: FSMContext,
-    config: Config
+    config: Config,
+    api_session: aiohttp.ClientSession,
+    token: str
 ):
     '''Обработка ввода контактной информации.'''
     async with state.proxy() as data:
@@ -244,7 +268,13 @@ async def finish_order(
             if not await email_contact_check(message):
                 return
         await state.update_data(con_data=message.text)
-        await send_order_data(message, state, config)
+        await send_order_data(
+            message,
+            state,
+            config,
+            api_session,
+            token
+        )
 
 
 def register_order(dp: Dispatcher):

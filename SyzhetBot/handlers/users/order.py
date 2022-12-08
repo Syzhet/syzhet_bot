@@ -1,9 +1,9 @@
 import logging
 from typing import Union
 
+import aiohttp
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
-import aiohttp
 from emoji import emojize
 
 from SyzhetBot.config import Config
@@ -11,10 +11,9 @@ from SyzhetBot.handlers.users.contact_feedback import (email_contact_check,
                                                        mobile_contact_check)
 from SyzhetBot.handlers.users.menu import menu
 from SyzhetBot.keyboards.inline import AllMenuInlineKeyboard
+from SyzhetBot.misc.http_request import ApiHttpRequest
 from SyzhetBot.misc.info_for_order import TYPE_WORKS
 from SyzhetBot.misc.states import OrderState
-from SyzhetBot.misc.http_request import ApiHttpRequest
-
 
 ORDER_MENU_KEYBOARD = AllMenuInlineKeyboard()
 ORDER_MENU_KEYBOARD.make_inline_keyboard(

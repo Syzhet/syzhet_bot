@@ -237,12 +237,20 @@ async def order_set_contact(
     call: types.CallbackQuery,
     callback_data: dict,
     state: FSMContext,
-    config: Config
+    config: Config,
+    api_session: aiohttp.ClientSession,
+    token: str
 ):
     '''Обработка нажатия на одну из кнопок меню выбора способа связи.'''
     type_contact = callback_data.get('name')
     if type_contact == 'telegram':
-        await send_order_data(call, state, config)
+        await send_order_data(
+            call,
+            state,
+            config,
+            api_session,
+            token
+        )
     else:
         await message_for_order_contact(call, type_contact)
         async with state.proxy() as data:

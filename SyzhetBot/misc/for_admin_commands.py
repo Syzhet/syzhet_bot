@@ -19,10 +19,10 @@ async def list_user_to_message(message: types.Message, response: List):
             orders = 'Нет заказов'
         await message.answer(
             (f'id: {resp["id"]}\n'
-                f'usernmae: @{resp["username"]}\n'
-                f'telegram_id: {resp["telegram_id"]}\n'
-                f'updated: {resp["updated_on"]}\n'
-                f'Заказы:\n{orders}')
+             f'usernmae: @{resp["username"]}\n'
+             f'telegram_id: {resp["telegram_id"]}\n'
+             f'updated: {resp["updated_on"]}\n'
+             f'Заказы:\n{orders}')
         )
 
 
@@ -33,7 +33,7 @@ async def list_order_to_message(message: types.Message, response: List):
              f'title: {resp["title"]}\n'
              f'description: {resp["description"]}\n'
              'Пользователь:\n'
-             f'id пользователя: @{resp["user"]["id"]}\n'
+             f'id пользователя: {resp["user"]["id"]}\n'
              f'usernmae: @{resp["user"]["username"]}\n'
              f'telegram_id: {resp["user"]["telegram_id"]}\n'
              f'updated: {resp["user"]["updated_on"]}\n'

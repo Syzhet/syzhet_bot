@@ -50,7 +50,6 @@ async def cmd_orders(
         await message.answer(
             'Произошла ошибка. Попробуйте изменить запрос'
         )
-    await message.answer(response)
 
 
 def register_cmd(dp: Dispatcher):

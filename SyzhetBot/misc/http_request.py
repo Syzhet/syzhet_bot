@@ -21,12 +21,25 @@ class ApiHttpRequest:
         token: str,
         params: Optional[Dict[str, str]] = None
     ) -> List[Optional[Dict[str, str]]]:
-        """Возвращает список заказов, полученных через API."""
+        """Возвращает список данных, полученных через API."""
 
         async with self.session.get(
             url=self.url,
             headers={'Authorization': f'Bearer {token}'},
             params=params
+        ) as resp:
+            return await resp.json()
+
+    async def get_obj_from_id(
+        self,
+        token: str,
+        id: int
+    ):
+        """Возвращает единичный объект данных, полученных через API."""
+        url = '{0}{1}/'.format(self.url, id)
+        async with self.session.get(
+            url=url,
+            headers={'Authorization': f'Bearer {token}'}
         ) as resp:
             return await resp.json()
 
@@ -100,3 +113,10 @@ class ApiHttpRequest:
         """Возвращает список заказов, полученных через API."""
 
         return await self.get_obj_list(token, params)
+
+    async def get_user_from_id(
+        self,
+        token: str,
+        id: int
+    ):
+        return await self.get_obj_from_id(token, id)

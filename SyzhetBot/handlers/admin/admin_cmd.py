@@ -3,7 +3,8 @@ from aiohttp import ClientSession
 
 from ...filters.admin import AdminFilter
 from ...misc.for_admin_commands import (list_order_to_message,
-                                        list_user_to_message)
+                                        list_user_to_message,
+                                        user_obj_to_message)
 from ...misc.http_request import ApiHttpRequest
 
 USER_URL = '/api/v1/users/'
@@ -52,6 +53,29 @@ async def cmd_orders(
         )
 
 
+async def cmd_user_id(
+    message: types.Message,
+    api_session: ClientSession,
+    token: str
+):
+    """Обработка команды /user id."""
+
+    try:
+        id = int(message.get_args())
+    except ValueError:
+        await message.answer(
+            'Произошла ошибка. ID должен быть целым числом!'
+        )
+    api_http_request = ApiHttpRequest(api_session, USER_URL)
+    response = await api_http_request.get_user_from_id(token, id)
+    try:
+        await user_obj_to_message(message, response)
+    except KeyError:
+        await message.answer(
+            'Произошла ошибка. Попробуйте изменить запрос'
+        )
+
+
 def register_cmd(dp: Dispatcher):
     '''Регистрация в диспетчере функции cmd_users.'''
 
@@ -65,5 +89,11 @@ def register_cmd(dp: Dispatcher):
         cmd_orders,
         AdminFilter(),
         commands=['orders'],
+        state='*'
+    )
+    dp.register_message_handler(
+        cmd_user_id,
+        AdminFilter(),
+        commands=['user'],
         state='*'
     )

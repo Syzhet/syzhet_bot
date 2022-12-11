@@ -2,7 +2,8 @@ from aiogram import Dispatcher, types
 from aiohttp import ClientSession
 
 from ...filters.admin import AdminFilter
-from ...misc.for_admin_commands import list_user_to_message
+from ...misc.for_admin_commands import (list_order_to_message,
+                                        list_user_to_message)
 from ...misc.http_request import ApiHttpRequest
 
 USER_URL = '/api/v1/users/'
@@ -43,12 +44,12 @@ async def cmd_orders(
             params = {params[0]: params[1]}
     api_http_request = ApiHttpRequest(api_session, ORDER_URL)
     response = await api_http_request.get_orders(token, params)
-    # try:
-    #     await list_user_to_message(message, response)
-    # except KeyError:
-    #     await message.answer(
-    #         'Произошла ошибка. Попробуйте изменить запрос'
-    #     )
+    try:
+        await list_order_to_message(message, response)
+    except KeyError:
+        await message.answer(
+            'Произошла ошибка. Попробуйте изменить запрос'
+        )
     await message.answer(response)
 
 

@@ -120,3 +120,10 @@ class ApiHttpRequest:
         id: int
     ):
         return await self.get_obj_from_id(token, id)
+
+    async def get_order_from_id(
+        self,
+        token: str,
+        id: int
+    ):
+        return await self.get_obj_from_id(token, id)

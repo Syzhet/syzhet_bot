@@ -87,3 +87,24 @@ async def user_obj_to_message(
          f'updated: {response["updated_on"]}\n'
          f'Заказы:\n{orders}')
     )
+
+
+async def order_obj_to_message(
+    message: types.Message,
+    response: Dict
+):
+    """
+    Функция подготовки данных и формирования текста
+    для отправки сообщения администратору бота
+    по конкретному заказу.
+    """
+    await message.answer(
+        (f'id заказа: {response["id"]}\n'
+         f'title: {response["title"]}\n'
+         f'description: {response["description"]}\n'
+         'Пользователь:\n'
+         f'id пользователя: {response["user"]["id"]}\n'
+         f'usernmae: @{response["user"]["username"]}\n'
+         f'telegram_id: {response["user"]["telegram_id"]}\n'
+         f'updated: {response["user"]["updated_on"]}\n')
+        )

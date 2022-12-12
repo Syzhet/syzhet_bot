@@ -43,6 +43,17 @@ class ApiHttpRequest:
         ) as resp:
             return await resp.json()
 
+    async def get_obj_count(
+        self,
+        token: str,
+    ):
+        url = '{0}count/'.format(self.url)
+        async with self.session.get(
+            url=url,
+            headers={'Authorization': f'Bearer {token}'}
+        ) as resp:
+            return await resp.json()
+
     async def create_user(
         self,
         token: str,
@@ -127,3 +138,15 @@ class ApiHttpRequest:
         id: int
     ):
         return await self.get_obj_from_id(token, id)
+
+    async def get_user_count(
+        self,
+        token: str
+    ):
+        return await self.get_obj_count(token, id)
+
+    async def get_order_count(
+        self,
+        token: str
+    ):
+        return await self.get_obj_count(token)

@@ -124,10 +124,9 @@ async def cmd_orders_count(
 
     api_http_request = ApiHttpRequest(api_session, ORDER_URL)
     response = await api_http_request.get_order_count(token)
-    # count = response.get('count_orders').split()[-1]
+    count = response.get('count_orders').split()[-1]
     return await message.answer(
-        # f'Количество заказов: {count}'
-        response
+        f'Количество заказов: {count}'
     )
 
 

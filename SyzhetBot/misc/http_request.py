@@ -143,7 +143,7 @@ class ApiHttpRequest:
         self,
         token: str
     ):
-        return await self.get_obj_count(token, id)
+        return await self.get_obj_count(token)
 
     async def get_order_count(
         self,

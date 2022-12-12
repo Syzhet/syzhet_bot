@@ -5,7 +5,7 @@ from ...filters.admin import AdminFilter
 from ...misc.for_admin_commands import (list_order_to_message,
                                         list_user_to_message,
                                         order_obj_to_message,
-                                        user_obj_to_message,)
+                                        user_obj_to_message)
 from ...misc.http_request import ApiHttpRequest
 
 USER_URL = '/api/v1/users/'

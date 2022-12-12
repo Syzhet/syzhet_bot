@@ -109,8 +109,9 @@ async def cmd_users_count(
 
     api_http_request = ApiHttpRequest(api_session, USER_URL)
     response = await api_http_request.get_user_count(token)
+    count = response.get('count_users').split()[-1]
     return await message.answer(
-        response
+        f'Количество зарегистрированных пользователей: {count}'
     )
 
 

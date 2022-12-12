@@ -115,6 +115,21 @@ async def cmd_users_count(
     )
 
 
+async def cmd_orders_count(
+    message: types.Message,
+    api_session: ClientSession,
+    token: str
+):
+    '''Обработка команды /ucount.'''
+
+    api_http_request = ApiHttpRequest(api_session, USER_URL)
+    response = await api_http_request.get_user_count(token)
+    count = response.get('count_orders').split()[-1]
+    return await message.answer(
+        f'Количество заказов: {count}'
+    )
+
+
 def register_cmd(dp: Dispatcher):
     '''Регистрация в диспетчере функции cmd_users.'''
 
@@ -146,5 +161,11 @@ def register_cmd(dp: Dispatcher):
         cmd_users_count,
         AdminFilter(),
         commands=['ucount'],
+        state='*'
+    )
+    dp.register_message_handler(
+        cmd_orders_count,
+        AdminFilter(),
+        commands=['ocount'],
         state='*'
     )

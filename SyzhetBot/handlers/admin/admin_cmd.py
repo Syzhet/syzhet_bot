@@ -122,7 +122,7 @@ async def cmd_orders_count(
 ):
     '''Обработка команды /ucount.'''
 
-    api_http_request = ApiHttpRequest(api_session, USER_URL)
+    api_http_request = ApiHttpRequest(api_session, ORDER_URL)
     response = await api_http_request.get_order_count(token)
     # count = response.get('count_orders').split()[-1]
     return await message.answer(

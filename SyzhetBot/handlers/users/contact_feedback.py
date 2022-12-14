@@ -75,7 +75,7 @@ async def contact_feedback(
         await call.message.edit_text(
             ('Спасибо за обращение! \nЯ свяжусь с вами в ближайшее время.')
         )
-        await menu(call.message)
+        await menu(call.message, state)
 
         text = (f'Контакт: @{call.from_user.username} просит связаться с ним.')
         await call.bot.send_message(

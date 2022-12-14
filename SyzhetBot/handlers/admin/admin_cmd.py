@@ -192,6 +192,6 @@ def register_cmd(dp: Dispatcher):
     dp.register_message_handler(
         admin_help,
         AdminFilter(),
-        commands=['ocount'],
+        commands=['h'],
         state='*'
     )

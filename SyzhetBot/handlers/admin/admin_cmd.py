@@ -120,13 +120,33 @@ async def cmd_orders_count(
     api_session: ClientSession,
     token: str
 ):
-    '''Обработка команды /ucount.'''
+    '''Обработка команды /ocount.'''
 
     api_http_request = ApiHttpRequest(api_session, ORDER_URL)
     response = await api_http_request.get_order_count(token)
     count = response.get('count_orders').split()[-1]
     return await message.answer(
         f'Количество заказов: {count}'
+    )
+
+
+async def admin_help(
+        message: types.Message
+):
+    return await message.answer(
+        ('/users - все зарегистрированные пользователи\n'
+         '/users limit 5 - последние 5 зарегистрированных пользователей\n'
+         '/users tgid (указать telegram id пользователя) - выводит информацию '
+         'о пользователе по telegram id\n'
+         '/user id (указать id пользователя) - выводит информацию о '
+         'пользователе по его id\n'
+         '/ucount - возвращает количество зарегистрированных пользователей'
+         '/orders - все заказы\n'
+         '/orders limit 5 - ограничивает вывод 5 заказами\n'
+         '/order id (указать id заказа) - выводит информацию о заказе '
+         'по его id\n'
+         '/ocount - возвращает количество заказов'
+         '/h - выводит список команда для администратора')
     )
 
 
@@ -165,6 +185,12 @@ def register_cmd(dp: Dispatcher):
     )
     dp.register_message_handler(
         cmd_orders_count,
+        AdminFilter(),
+        commands=['ocount'],
+        state='*'
+    )
+    dp.register_message_handler(
+        admin_help,
         AdminFilter(),
         commands=['ocount'],
         state='*'

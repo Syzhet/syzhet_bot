@@ -1,4 +1,3 @@
-import logging
 from typing import Dict, List, Optional
 
 import aiohttp
@@ -75,9 +74,6 @@ class ApiHttpRequest:
     ) -> List[Optional[Dict[str, str]]]:
         """Возвращает список пользователей, полученных через API."""
 
-        logging.info(f'get_users params: {params}')
-        result = await self.get_obj_list(token, params)
-        logging.info(f'get_users result: {result}')
         return await self.get_obj_list(token, params)
 
     async def get_user_id(
@@ -92,7 +88,6 @@ class ApiHttpRequest:
             params=tg_id
         )
         try:
-            logging.info(f'get_user_id: {user}')
             return user[0]['id']
         except (IndexError, KeyError):
             return 'Error. This user not found'

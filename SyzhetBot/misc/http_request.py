@@ -106,10 +106,6 @@ class ApiHttpRequest:
     ):
         """Функция создания заказа."""
 
-        # user_id = await self.get_user_id(
-        #     token=token,
-        #     tg_id=tg_id
-        # )
         async with self.session.post(
             url=self.url,
             headers={'Authorization': f'Bearer {token}'},

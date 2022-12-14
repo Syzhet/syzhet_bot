@@ -218,7 +218,7 @@ async def send_order_data(
             des_data=des_data
         )
     )
-    user_id = obj.from_user.id
+    tg_id = obj.from_user.id
     api_http_request = ApiHttpRequest(
         session=api_session,
         url=USER_URL
@@ -226,7 +226,7 @@ async def send_order_data(
     try:
         user_id = await api_http_request.get_user_id(
             token=token,
-            tg_id={'tgid': user_id}
+            tg_id={'tgid': tg_id}
         )
     except Exception as exp:
         logging.info(f'Ошибка при получении пользователя - {exp}')

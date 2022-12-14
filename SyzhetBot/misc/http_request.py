@@ -75,6 +75,9 @@ class ApiHttpRequest:
     ) -> List[Optional[Dict[str, str]]]:
         """Возвращает список пользователей, полученных через API."""
 
+        logging.info(f'get_users params: {params}')
+        result = await self.get_obj_list(token, params)
+        logging.info(f'get_users result: {result}')
         return await self.get_obj_list(token, params)
 
     async def get_user_id(

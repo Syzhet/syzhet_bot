@@ -76,6 +76,7 @@ ORDER_CONTACT_CANSEL_KEYBOARD.make_inline_keyboard(
 )
 
 ORDER_URL = '/api/v1/orders/'
+USER_URL = '/api/v1/users/'
 
 
 async def type_work(call: types.CallbackQuery, type_work):
@@ -220,6 +221,17 @@ async def send_order_data(
     user_id = obj.from_user.id
     api_http_request = ApiHttpRequest(
         session=api_session,
+        url=USER_URL
+    )
+    try:
+        user_id = await api_http_request.get_user_id(
+            token=token,
+            tg_id={'tgid': user_id}
+        )
+    except Exception as exp:
+        logging.info(f'Ошибка при получении пользователя - {exp}')
+    api_http_request = ApiHttpRequest(
+        session=api_session,
         url=ORDER_URL
     )
     try:
@@ -227,7 +239,7 @@ async def send_order_data(
             token=token,
             title=cat_data,
             description=des_data,
-            tg_id={'user_id': user_id}
+            user_id=user_id
         )
     except Exception as exp:
         logging.info(f'Ошибка при создании заказа - {exp}')

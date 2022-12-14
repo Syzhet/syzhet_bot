@@ -102,14 +102,14 @@ class ApiHttpRequest:
         token: str,
         title: str,
         description: str,
-        tg_id: Dict[str, int]
+        user_id: Dict[str, int]
     ):
         """Функция создания заказа."""
 
-        user_id = await self.get_user_id(
-            token=token,
-            tg_id=tg_id
-        )
+        # user_id = await self.get_user_id(
+        #     token=token,
+        #     tg_id=tg_id
+        # )
         async with self.session.post(
             url=self.url,
             headers={'Authorization': f'Bearer {token}'},

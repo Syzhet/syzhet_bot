@@ -1,3 +1,4 @@
+import logging
 from typing import Dict, List, Optional
 
 import aiohttp
@@ -88,6 +89,7 @@ class ApiHttpRequest:
             params=tg_id
         )
         try:
+            logging.info(f'get_user_id: {user}')
             return user[0]['id']
         except (IndexError, KeyError):
             return 'Error. This user not found'

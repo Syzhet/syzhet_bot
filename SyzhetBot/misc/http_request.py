@@ -32,10 +32,7 @@ class ApiHttpRequest:
             headers={'Authorization': f'Bearer {token}'},
             params=params
         ) as resp:
-            result = await resp.json()
-            if result:
-                return result
-            return 'Нет объектов в базе!'
+            return await resp.json()
 
     async def get_obj_from_id(
         self,

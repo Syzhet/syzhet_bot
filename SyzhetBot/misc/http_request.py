@@ -70,7 +70,7 @@ class ApiHttpRequest:
         telegram_id: str
     ):
         params = {'tgid': telegram_id}
-        user = self.get_users(token, params)
+        user = await self.get_users(token, params)
         if not user:
             async with self.session.post(
                 url=self.url,

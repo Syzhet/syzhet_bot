@@ -30,7 +30,7 @@ async def cmd_start(
     telegram_id = message.from_user.id
     username = message.from_user.username
     api_http_request = ApiHttpRequest(api_session, CREATE_USER_URL)
-    await api_http_request.create_user(token, username, telegram_id)
+    await api_http_request.get_or_create_user(token, username, telegram_id)
 
 
 def register_start(dp: Dispatcher):

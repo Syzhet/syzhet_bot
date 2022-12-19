@@ -54,19 +54,6 @@ class ApiHttpRequest:
         ) as resp:
             return await resp.json()
 
-    async def create_user(
-        self,
-        token: str,
-        username: str,
-        telegram_id: str
-    ):
-        async with self.session.post(
-            url=self.url,
-            headers={'Authorization': f'Bearer {token}'},
-            json={'username': username, 'telegram_id': telegram_id}
-        ) as resp:
-            return await resp.json()
-
     async def get_users(
         self,
         token: str,
@@ -75,6 +62,23 @@ class ApiHttpRequest:
         """Возвращает список пользователей, полученных через API."""
 
         return await self.get_obj_list(token, params)
+
+    async def get_or_create_user(
+        self,
+        token: str,
+        username: str,
+        telegram_id: str
+    ):
+        params = {'tgid': telegram_id}
+        user = self.get_users(token, params)
+        if not user:
+            async with self.session.post(
+                url=self.url,
+                headers={'Authorization': f'Bearer {token}'},
+                json={'username': username, 'telegram_id': telegram_id}
+            ) as resp:
+                return await resp.json()
+        return user
 
     async def get_user_id(
         self,

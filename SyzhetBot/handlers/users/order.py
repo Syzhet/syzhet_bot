@@ -191,7 +191,8 @@ async def send_order_data(
     api_session: aiohttp.ClientSession,
     token: str
 ):
-    '''Функция отправки сообщения владельцу бота со всеми данными по заявке.'''
+    """Функция отправки сообщения владельцу бота со всеми данными по заявке."""
+
     text_for_host = ('Контакт: {contact_text} '
                      'оставил заявку.\n'
                      'Категория заявки: {cat_data}\n'
@@ -253,7 +254,8 @@ async def order_set_contact(
     api_session: aiohttp.ClientSession,
     token: str
 ):
-    '''Обработка нажатия на одну из кнопок меню выбора способа связи.'''
+    """Обработка нажатия на одну из кнопок меню выбора способа связи."""
+
     type_contact = callback_data.get('name')
     if type_contact == 'telegram':
         await send_order_data(
@@ -277,7 +279,8 @@ async def finish_order(
     api_session: aiohttp.ClientSession,
     token: str
 ):
-    '''Обработка ввода контактной информации.'''
+    """Обработка ввода контактной информации."""
+
     async with state.proxy() as data:
         type_contact = data['type_contact']
         if type_contact == 'mobile':
@@ -297,12 +300,13 @@ async def finish_order(
 
 
 def register_order(dp: Dispatcher):
-    '''
+    """
     Регистрация в диспетчере функций: order_menu,
     choise_order_category, category_further_to_description,
     cansel_order, description_further_to_custom_info,
     order_get_contact, order_set_contact, finish_order.
-    '''
+    """
+
     dp.register_callback_query_handler(
         order_menu,
         AllMenuInlineKeyboard.callback_menu.filter(name='orders')

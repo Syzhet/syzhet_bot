@@ -23,7 +23,8 @@ async def menu(
     obj: Union[types.Message, types.CallbackQuery],
     state: FSMContext
 ):
-    '''Обработка команды /menu и текстового сообщения "menu".'''
+    """Обработка команды /menu и текстового сообщения "menu"."""
+
     current_state = await state.get_state()
     if current_state:
         await state.finish()
@@ -39,7 +40,8 @@ async def menu(
 
 
 def register_menu(dp: Dispatcher):
-    '''Регистрация в диспетчере функции menu.'''
+    """Регистрация в диспетчере функции menu."""
+
     dp.register_message_handler(
         menu,
         commands=['menu'],

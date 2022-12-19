@@ -1,5 +1,6 @@
 def rate_limit(limit: int, key=None):
-    '''Функция установки лимита для тротлинга.'''
+    """Функция установки лимита для тротлинга."""
+
     def decorator(func):
         setattr(func, 'throttling_rate_limit', limit)
         if key:

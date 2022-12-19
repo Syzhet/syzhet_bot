@@ -133,6 +133,8 @@ async def cmd_orders_count(
 async def admin_help(
         message: types.Message
 ):
+    """Обработка команды /h."""
+
     return await message.answer(
         ('/users - все зарегистрированные пользователи\n'
          '/users limit 5 - последние 5 зарегистрированных пользователей\n'

@@ -17,7 +17,8 @@ async def cmd_start(
     api_session: ClientSession,
     token: str
 ):
-    '''Обработка команды /start.'''
+    """Обработка команды /start."""
+
     current_state = await state.get_state()
     if current_state:
         await state.finish()

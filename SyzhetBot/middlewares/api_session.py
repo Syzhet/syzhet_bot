@@ -13,6 +13,8 @@ class ApiMiddlware(LifetimeControllerMiddleware):
         self.api_password = misc.api_password
 
     def create_session(self):
+        """Созданиее сесси aiohttp для работы с API."""
+
         return aiohttp.ClientSession(self.api_url)
 
     async def pre_process(self, update: types.Update, data: dict, *args):

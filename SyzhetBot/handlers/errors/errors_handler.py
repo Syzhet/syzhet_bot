@@ -14,6 +14,7 @@ from aiogram.utils.exceptions import (BadRequest, BotBlocked, BotKicked,
 
 
 async def errors_handler(update: types.Update, exception):
+    """Функция обработки исключений в работе бота."""
 
     if isinstance(exception, MessageCantBeDeleted):
         logging.info('message can\'t be deleted')

@@ -8,14 +8,16 @@ ID_STICKER = ('CAACAgIAAxkBAAEFzJljHY8rk_'
 
 
 async def echo(message: types.Message, state: FSMContext):
-    '''Обработка неизвестных команд.'''
+    """Обработка неизвестных команд."""
+
     await message.reply('Я не знаю такой команды...')
     await message.bot.send_sticker(message.from_user.id, ID_STICKER)
     await cmd_help(message, state)
 
 
 def register_echo(dp: Dispatcher):
-    '''Регистрация в диспетчере функции echo.'''
+    """Регистрация в диспетчере функции echo."""
+
     dp.register_message_handler(
         echo,
         state='*',

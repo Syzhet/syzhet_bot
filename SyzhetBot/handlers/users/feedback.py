@@ -20,7 +20,8 @@ FEEDBACK_BACK_MENU_KEYBOARD.make_inline_keyboard(
 
 
 async def feedback(call: types.CallbackQuery):
-    '''Обработка нажатия inline-кнопки "Обратная связь".'''
+    """Обработка нажатия inline-кнопки "Обратная связь"."""
+
     with suppress(MessageNotModified):
         await call.message.edit_text(
             ('Выберите удобный для Вас способ связи. \n'
@@ -30,7 +31,8 @@ async def feedback(call: types.CallbackQuery):
 
 
 def register_feedback(dp: Dispatcher):
-    '''Регистрация в диспетчере функции feedback.'''
+    """Регистрация в диспетчере функции feedback."""
+
     dp.register_callback_query_handler(
         feedback,
         AllMenuInlineKeyboard.callback_menu.filter(name='feedback')

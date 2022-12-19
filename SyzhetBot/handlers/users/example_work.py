@@ -17,7 +17,8 @@ DRIBBLE = hlink('Dribbble', 'https://dribbble.com/khasguz')
 
 
 async def example_work(call: types.CallbackQuery):
-    '''Обработка нажатия inline-кнопки "Примеры работ".'''
+    """Обработка нажатия inline-кнопки "Примеры работ"."""
+
     await call.message.edit_text(
         (f'{emojize(":pushpin:")} Работы по направлению '
          f'{hbold("графического дизайна")} '
@@ -30,7 +31,8 @@ async def example_work(call: types.CallbackQuery):
 
 
 def register_example_work(dp: Dispatcher):
-    '''Регистрация в диспетчере функции example_work в диспетчере.'''
+    """Регистрация в диспетчере функции example_work в диспетчере."""
+
     dp.register_callback_query_handler(
         example_work,
         AllMenuInlineKeyboard.callback_menu.filter(name='works')

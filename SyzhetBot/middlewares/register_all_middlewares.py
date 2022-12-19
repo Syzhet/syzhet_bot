@@ -11,6 +11,8 @@ def register_all_middlewares(
     dp: Dispatcher,
     config: Config,
 ):
+    """Функция регистрации всех middleware бота."""
+
     dp.setup_middleware(EnvironmentMiddleware(config=config))
     dp.setup_middleware(ThrottlingMiddleware())
     dp.setup_middleware(CallAnswertMiddleware())

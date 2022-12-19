@@ -13,7 +13,8 @@ from .users.start import register_start
 
 
 def register_all_handlers(dp: Dispatcher):
-    '''Регистрация всех хендлеров в диспетчере.'''
+    """Регистрация всех хендлеров в диспетчере."""
+
     register_errors_handler(dp)
     register_start(dp)
     register_menu(dp)

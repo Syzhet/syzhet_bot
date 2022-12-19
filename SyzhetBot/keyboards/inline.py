@@ -7,9 +7,13 @@ class AllMenuInlineKeyboard(InlineKeyboardMarkup):
     callback_menu = CallbackData('menu', 'type', 'name')
 
     def make_contact_callback(self, type, name):
+        """Создание фабрики коллбэков для контактов."""
+
         return self.callback_menu.new(type=type, name=name)
 
     def make_inline_keyboard(self, type, buttons, but_in_row=2):
+        """Функция создания inline клавиатуры."""
+
         button_list = []
         for text, callback in buttons.items():
             button_list.append(

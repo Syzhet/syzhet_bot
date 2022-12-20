@@ -8,7 +8,7 @@ def to_timezone(date_str: str) -> str:
     reg_date = datetime.fromisoformat(date_str)
     reg_date_no_ms = reg_date.replace(microsecond=0)
     reg_date_for_message = reg_date_no_ms + timedelta(hours=3)
-    return reg_date_for_message.strftime('%d-%m-%y %h:%m')
+    return reg_date_for_message.strftime('%d.%m.%Y %H:%M')
 
 
 async def list_user_to_message(

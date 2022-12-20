@@ -1,6 +1,14 @@
+from datetime import datetime, timedelta
 from typing import Dict, List, Union
 
 from aiogram import types
+
+
+def to_timezone(date_str: str) -> str:
+    reg_date = datetime.fromisoformat(date_str)
+    reg_date_no_ms = reg_date.replace(microsecond=0)
+    reg_date_for_message = reg_date_no_ms + timedelta(hours=3)
+    return reg_date_for_message.strftime('%d-%m-%y %h:%m')
 
 
 async def list_user_to_message(
@@ -14,6 +22,7 @@ async def list_user_to_message(
     """
 
     for resp in response:
+        updated = to_timezone(resp["updated_on"])
         orders: Union[str, List] = []
         if resp['orders']:
             for ord in resp['orders']:
@@ -30,7 +39,7 @@ async def list_user_to_message(
             (f'id пользователя: {resp["id"]}\n'
              f'usernmae: @{resp["username"]}\n'
              f'telegram_id: {resp["telegram_id"]}\n'
-             f'updated: {resp["updated_on"]}\n'
+             f'updated: {updated}\n'
              f'Заказы:\n{orders}')
         )
 

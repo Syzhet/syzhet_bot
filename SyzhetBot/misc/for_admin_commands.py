@@ -91,11 +91,12 @@ async def user_obj_to_message(
         orders = ''.join(orders)
     else:
         orders = 'Нет заказов'
+    updated = to_timezone(response["updated_on"])
     await message.answer(
         (f'id пользователя: {response["id"]}\n'
          f'usernmae: @{response["username"]}\n'
          f'telegram_id: {response["telegram_id"]}\n'
-         f'updated: {response["updated_on"]}\n'
+         f'updated: {updated}\n'
          f'Заказы:\n{orders}')
     )
 
@@ -109,6 +110,8 @@ async def order_obj_to_message(
     для отправки сообщения администратору бота
     по конкретному заказу.
     """
+
+    updated = to_timezone(response["user"]["updated_on"])
     await message.answer(
         (f'id заказа: {response["id"]}\n'
          f'title: {response["title"]}\n'
@@ -117,5 +120,5 @@ async def order_obj_to_message(
          f'id пользователя: {response["user"]["id"]}\n'
          f'usernmae: @{response["user"]["username"]}\n'
          f'telegram_id: {response["user"]["telegram_id"]}\n'
-         f'updated: {response["user"]["updated_on"]}\n')
+         f'updated: {updated}\n')
         )

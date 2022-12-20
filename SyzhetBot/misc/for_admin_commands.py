@@ -43,7 +43,8 @@ async def list_order_to_message(
     Функция подготовки данных и формирования текста
     для отправки сообщения администратору бота по заказам работ.
     """
-
+    if not response:
+        await message.answer('В базе нет заказов!')
     for resp in response:
         await message.answer(
             (f'id заказа: {resp["id"]}\n'
